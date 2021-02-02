@@ -1,4 +1,4 @@
-# Project of Architetture distribuite per il cloud 2020
+# Project of Distributed Architectures for Cloud 2020
 
 ### Author: Giuseppe Di Palma
 
