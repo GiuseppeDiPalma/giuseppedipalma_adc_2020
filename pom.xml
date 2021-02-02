@@ -17,6 +17,13 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
+  <repositories>
+    <repository>
+      <id>tomp2p.net</id>
+      <url>http://tomp2p.net/dev/mvn/</url>
+    </repository>
+  </repositories>
+
 
   <dependencies>
     <dependency>
@@ -24,6 +31,22 @@
       <artifactId>junit</artifactId>
       <version>4.11</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>net.tomp2p</groupId>
+      <artifactId>tomp2p-all</artifactId>
+      <version>5.0-Beta8</version>
+    </dependency>
+    <dependency>
+      <groupId>args4j</groupId>
+      <artifactId>args4j</artifactId>
+      <version>2.33</version>
+    </dependency>
+    <dependency>
+      <groupId>org.beryx</groupId>
+      <artifactId>text-io</artifactId>
+      <version>3.4.1</version>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 
