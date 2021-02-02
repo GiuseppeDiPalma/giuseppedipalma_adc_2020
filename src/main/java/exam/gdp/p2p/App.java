@@ -2,7 +2,7 @@ package exam.gdp.p2p;
 
 /**
  * Hello world!
- *
+ * ciao ciao
  */
 public class App 
 {
