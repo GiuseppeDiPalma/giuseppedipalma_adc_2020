@@ -45,9 +45,9 @@
     <dependency>
       <groupId>org.beryx</groupId>
       <artifactId>text-io</artifactId>
-      <version>3.4.1</version>
-      <scope>runtime</scope>
+      <version>3.3.0</version>
     </dependency>
+
   </dependencies>
 
   <build>
