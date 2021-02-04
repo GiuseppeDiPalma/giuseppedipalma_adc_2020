@@ -13,15 +13,16 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 
     final private Peer peer;
     final private PeerDHT dht;
+    private String nickname = "";
 
-    public SemanticHarmonySocialNetworkImpl(int idPeer, String masterPeer) throws IOException {
+    public SemanticHarmonySocialNetworkImpl(int idPeer, String masterPeer, final MessageListener listener)
+            throws IOException {
 
         peer = new PeerBuilder(Number160.createHash(idPeer)).ports(Utils.MASTER_PORT_BASE + idPeer).start();
         dht = new PeerBuilderDHT(peer).start();
     }
 
     public List<String> getUserProfileQuestions() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -39,5 +40,5 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         // TODO Auto-generated method stub
         return null;
     }
-    
+
 }
