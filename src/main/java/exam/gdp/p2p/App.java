@@ -15,7 +15,7 @@ public class App {
     @Option(name = "-peerid", aliases = "--identifierpeer", usage = "Identifier unique for peer", required = true)
     private static int peerId;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         App app = new App();
         final CmdLineParser parser = new CmdLineParser(app);
 
@@ -26,10 +26,14 @@ public class App {
             TextIO textIO = TextIoFactory.getTextIO();
             TextTerminal terminal = textIO.getTextTerminal();
 
+            SemanticHarmonySocialNetworkImpl peer = new SemanticHarmonySocialNetworkImpl(peerId, masterIp,
+                    new MessageListenerImpl(peerId));
+
+            User user = new User();
+
             terminal.printf("Staring peer id: %d on master node: %s\n", peerId, masterIp);
 
             while (true) {
-                printLogo(terminal);
                 firstMenu(terminal);
 
                 int option = textIO.newIntInputReader().withMaxVal(3).withMinVal(1).read("Option");
@@ -37,6 +41,11 @@ public class App {
                 switch (option) {
                     case 1:
                         terminal.printf("REGISTER NEW USER\n");
+                        String nickname = textIO.newStringInputReader().withMinLength(1).read("Choose a nickname: ");
+                        terminal.printf("Hi, " + nickname);
+                        terminal.printf(
+                                "Now, with the following questions, we can help you find friends similar to you.");
+
                     case 2:
                         terminal.printf("SIGN IN\n");
 
@@ -62,16 +71,5 @@ public class App {
         terminal.printf("1 - REGISTER;\n");
         terminal.printf("2 - LOGIN;\n");
         terminal.printf("3 - EXIT;\n");
-    }
-
-    public static void printLogo(TextTerminal terminal) {
-        terminal.printf("\n\n");
-        terminal.printf("    _       _  _____ _      _____ \n");
-        terminal.printf("   (_)     | |/ ____| |    |_   _|\n");
-        terminal.printf("___ _  __ _| | |    | |      | |  \n");
-        terminal.printf("/ __|/ _ \\ / __| |/ _` | | |    | |      | |  \n");
-        terminal.printf("\\__ \\ (_) | (__| | (_| | | |____| |____ _| |_ \n");
-        terminal.printf("|___/\\___/ \\___|_|\\__,_|_|\\_____|______|_____|\n");
-        terminal.printf("                                  \n\n\n");
     }
 }
