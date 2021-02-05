@@ -1,33 +1,17 @@
 package exam.gdp.p2p;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
-import net.tomp2p.peers.PeerAddress;
+public class User implements Serializable {
 
-public class User {
+    private static final long serialVersionUID = 1L;
+    public String nickname;
+    List<String> frinedList = new ArrayList<>();
 
-    private String nickname;
-    public List<User> friendList;
+    public User() {
 
-    private PeerAddress peer;
-    public Vector resultVector;
-
-    public User(PeerAddress peer, String nickname, List<User> friendList, Vector resultVector) {
-
-        this.setPeer(peer);
-        this.setNickname(nickname);
-        this.friendList = friendList;
-        this.resultVector = resultVector;
-
-    }
-
-    public PeerAddress getPeer() {
-        return peer;
-    }
-
-    public void setPeer(PeerAddress peer) {
-        this.peer = peer;
     }
 
     public String getNickname() {
@@ -36,5 +20,17 @@ public class User {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public List<String> getfrinedList() {
+        return frinedList;
+    }
+
+    public void setFriends(List<String> frinedList) {
+        this.frinedList = frinedList;
+    }
+
+    public String userProfile() {
+        return null;
     }
 }
