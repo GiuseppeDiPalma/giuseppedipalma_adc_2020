@@ -25,13 +25,13 @@ At this point, the system can compute the user scoring according to the answers.
 
 ## TO-DO LIST
 
-- [] Create users;
-  - [] Name, nickname;
-  - [] List of friends, number of friends;
-- [] Create profile of users;
-- [] Create test with 5 questions;
-- [] List of friends with similar answer;
-  - [] Answer is 1 or 0 (big five personality); or other
+- [ ] Create users;
+  - [ ] Name, nickname;
+  - [ ] List of friends, number of friends;
+- [ ] Create profile of users;
+- [ ] Create test with 5 questions;
+- [ ] List of friends with similar answer;
+  - [ ] Answer is 1 or 0 (big five personality); or other
 
 ## Usage
 
