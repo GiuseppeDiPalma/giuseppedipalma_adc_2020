@@ -20,7 +20,6 @@ public class App {
         final CmdLineParser parser = new CmdLineParser(app);
 
         try {
-
             parser.parseArgument(args);
 
             TextIO textIO = TextIoFactory.getTextIO();
@@ -56,7 +55,6 @@ public class App {
             }
 
         } catch (CmdLineException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
