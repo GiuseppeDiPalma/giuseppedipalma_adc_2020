@@ -7,7 +7,7 @@
 	<version>1.0</version>
 	<packaging>jar</packaging>
 
-	<name>P2P Publish Subscribe Client</name>
+	<name>Semantic Social Network</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
