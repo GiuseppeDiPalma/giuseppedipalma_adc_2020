@@ -90,9 +90,8 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>
-										exam.gdp.p2p.App
-									</mainClass>
+                  <addClasspath>true</addClasspath>
+									<mainClass>exam.gdp.p2p.App</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
