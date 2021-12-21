@@ -1,4 +1,4 @@
-package it.isislab.p2p.chat;
+package it.gdp.p2p.semanticSocialNetwork;
 
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;

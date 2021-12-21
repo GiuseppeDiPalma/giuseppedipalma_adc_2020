@@ -1,4 +1,4 @@
-package it.isislab.p2p.chat;
+package it.gdp.p2p.semanticSocialNetwork;
 
 import java.io.Serializable;
 import java.util.ArrayList;

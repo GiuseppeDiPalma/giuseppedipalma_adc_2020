@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>it.isislab.p2p</groupId>
+	<groupId>it.gdp.p2p</groupId>
 	<artifactId>publishsubscribe</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
@@ -76,7 +76,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										it.isislab.p2p.chat.App
+										it.gdp.p2p.semanticSocialNetwork.App
 									</mainClass>
 								</manifest>
 							</archive>
