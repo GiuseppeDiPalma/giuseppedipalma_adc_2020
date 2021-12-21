@@ -75,7 +75,7 @@
                 <archive>
                   <manifest>
                     <mainClass>
-                                        SocialNetwork.SocialNetworkMain
+                                        exam.gdp.p2p.App
                                     </mainClass>
                   </manifest>
                 </archive>
