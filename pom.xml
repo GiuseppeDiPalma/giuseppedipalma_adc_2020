@@ -1,59 +1,59 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>exam.gdp.p2p</groupId>
-  <artifactId>giuseppedipalma_adc_2020</artifactId>
-  <packaging>jar</packaging>
-  <version>1</version>
-  <name>giuseppedipalma_adc_2020</name>
-  <url>http://maven.apache.org</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-<properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>14</maven.compiler.source>
-    <maven.compiler.target>14</maven.compiler.target>
-  </properties>
-  
-  <repositories>
+	<groupId>it.isislab.p2p</groupId>
+	<artifactId>publishsubscribe</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>P2P Publish Subscribe Client</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<repositories>
 		<repository>
 			<id>tomp2p.net</id>
 			<url>http://tomp2p.net/dev/mvn/</url>
 		</repository>
 	</repositories>
-  
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
 
-    <dependency>
+
+
+	<dependencies>
+
+		<dependency>
 			<groupId>net.tomp2p</groupId>
 			<artifactId>tomp2p-all</artifactId>
 			<version>5.0-Beta8</version>
 		</dependency>
 
-	<dependency>
-			<groupId>org.beryx</groupId>
-			<artifactId>text-io</artifactId>
-			<version>3.3.0</version>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.5.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>args4j</groupId>
 			<artifactId>args4j</artifactId>
 			<version>2.33</version>
 		</dependency>
-  </dependencies>
-  <build>
+
+		<dependency>
+			<groupId>org.beryx</groupId>
+			<artifactId>text-io</artifactId>
+			<version>3.3.0</version>
+		</dependency>
+	</dependencies>
+	<build>
 		<plugins>
 		<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
-            </plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.1</version>
+        </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -63,7 +63,6 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
@@ -76,7 +75,9 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>exam.gdp.p2p.App</mainClass>
+									<mainClass>
+										it.isislab.p2p.chat.Example
+									</mainClass>
 								</manifest>
 							</archive>
 							<descriptorRefs>
@@ -89,5 +90,4 @@
 		</plugins>
 	</build>
 
-  
 </project>

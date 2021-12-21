@@ -1,4 +1,4 @@
-package exam.gdp.p2p;
+package it.isislab.p2p.chat;
 
 public interface MessageListener {
 
