@@ -76,7 +76,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										it.isislab.p2p.chat.Example
+										it.isislab.p2p.chat.App
 									</mainClass>
 								</manifest>
 							</archive>
