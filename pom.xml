@@ -76,7 +76,6 @@
 						<configuration>
 							<archive>
 								<manifest>
-                  <addClasspath>true</addClasspath>
 									<mainClass>exam.gdp.p2p.App</mainClass>
 								</manifest>
 							</archive>
