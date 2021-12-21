@@ -4,7 +4,7 @@
   <groupId>exam.gdp.p2p</groupId>
   <artifactId>giuseppedipalma_adc_2020</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
+  <version>1</version>
   <name>giuseppedipalma_adc_2020</name>
   <url>http://maven.apache.org</url>
 
