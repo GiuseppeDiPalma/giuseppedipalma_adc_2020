@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.gdp.p2p</groupId>
-	<artifactId>publishsubscribe</artifactId>
+	<artifactId>semanticsocialnetwork</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
 

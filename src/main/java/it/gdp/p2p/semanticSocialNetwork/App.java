@@ -66,8 +66,12 @@ public class App {
      * @param terminal
      */
     public static void firstMenu(TextTerminal terminal) {
-        terminal.printf("1 - REGISTER;\n");
-        terminal.printf("2 - LOGIN;\n");
-        terminal.printf("3 - EXIT;\n");
+        terminal.printf("\n<> MENU <>\n");
+        terminal.printf("\t1 - REGISTER;\n");
+        terminal.printf("\t2 - LOGIN;\n");
+        terminal.printf("\t3 - EXIT;\n");
+        terminal.printf("\t4 - SHOW YOUR FRIEND LIST\n");
+        terminal.printf("\t5 - SHOW USER\n");
+        terminal.printf("\t6 - CHANGE YOUR PERSONAL INFORMATION\n");
     }
 }

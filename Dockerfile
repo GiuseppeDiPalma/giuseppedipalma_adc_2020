@@ -11,6 +11,6 @@ FROM openjdk:8-jre-alpine
 WORKDIR /app
 ENV MASTERIP=127.0.0.1
 ENV ID=0
-COPY --from=1 /app/target/publishsubscribe-1.0-jar-with-dependencies.jar /app
+COPY --from=1 /app/target/semanticsocialnetwork-1.0-jar-with-dependencies.jar /app
 
-CMD /usr/bin/java -jar publishsubscribe-1.0-jar-with-dependencies.jar -mip $MASTERIP -peerid $ID
+CMD /usr/bin/java -jar semanticsocialnetwork-1.0-jar-with-dependencies.jar -mip $MASTERIP -peerid $ID
