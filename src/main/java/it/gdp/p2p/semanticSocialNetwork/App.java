@@ -31,10 +31,7 @@ public class App {
             terminal.printf("WELCOME ON BOARD MARINER\n\n");
             terminal.printf("PEER_ID_INFO: [%d] || MASTER_NODE_INFO: [%s]\n", peerId, masterIp);
 
-            terminal.printf("Before we start, we need to know more about your personality.\n");
-            terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
-            Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
-            Utils.printAnswers(peer.usr.getArrAnswers());
+            makeQuestions(terminal, peer);
 
             while (true) {
                 firstMenu(terminal);
@@ -81,5 +78,12 @@ public class App {
         terminal.printf("** 6 - CHANGE YOUR PERSONAL INFO    **\n");
         terminal.print("**************************************\n");
         terminal.print("**************************************\n");
+    }
+
+    public static void makeQuestions(TextTerminal terminal, SemanticHarmonySocialNetworkImpl peer){
+        terminal.printf("Before we start, we need to know more about your personality.\n");
+        terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
+        Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
+        Utils.printAnswers(peer.usr.getArrAnswers());
     }
 }
