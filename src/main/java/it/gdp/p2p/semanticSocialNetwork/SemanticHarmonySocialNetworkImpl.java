@@ -44,7 +44,8 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     }
 
     public List<String> getUserProfileQuestions() {
-        return null;
+        Question questions = new Question();
+        return questions.returnQuestion();
     }
 
     public String createAuserProfileKey(List<Integer> _answer) {

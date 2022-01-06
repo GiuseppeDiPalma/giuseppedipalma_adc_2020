@@ -16,7 +16,7 @@ public class Utils {
     public static void getAnswers(List<String> questionsList, List<Integer> answersList) {
         for (int i = 0; i < questionsList.size(); i++) {
             terminal.printf(questionsList.get(i));
-            answersList.add(textIO.newIntInputReader().withMaxVal(1).withMinVal(0).read());
+            answersList.add(textIO.newIntInputReader().withMaxVal(5).withMinVal(1).read());
         }
     }
 
