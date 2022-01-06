@@ -35,4 +35,10 @@ At this point, the system can compute the user scoring according to the answers.
 
 ## Usage
 
-...
+```bash
+docker build --no-cache -t social-p2p .
+```
+
+```bash
+docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 social-p2p
+```
