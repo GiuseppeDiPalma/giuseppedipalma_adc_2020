@@ -17,6 +17,8 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     final private Peer peer;
     final private PeerDHT dht;
 
+    User usr = new User();
+
     public SemanticHarmonySocialNetworkImpl(int idPeer, String masterPeer, final MessageListener listener)
             throws Exception {
 
