@@ -81,7 +81,7 @@ public class App {
     }
 
     public static void makeQuestions(TextTerminal terminal, SemanticHarmonySocialNetworkImpl peer){
-        terminal.printf("Before we start, we need to know more about your personality.\n");
+        terminal.printf("\nBefore we start, we need to know more about your personality.\n");
         terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
         Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
         Utils.printAnswers(peer.usr.getArrAnswers());
