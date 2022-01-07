@@ -32,25 +32,23 @@ public class App {
             terminal.printf("PEER_ID_INFO: [%d] || MASTER_NODE_INFO: [%s]\n", peerId, masterIp);
 
             makeQuestions(terminal, peer);
-
+            chooseNickname(terminal, textIO, peer);
             while (true) {
                 firstMenu(terminal);
 
-                int option = textIO.newIntInputReader().withMaxVal(3).withMinVal(1).read("Option");
+                int option = textIO.newIntInputReader().withMaxVal(4).withMinVal(1).read("Option");
 
                 switch (option) {
                     case 1:
-                        terminal.printf("REGISTER NEW USER\n");
-                        String nickname = textIO.newStringInputReader().withMinLength(1).read("Choose a nickname: ");
-                        terminal.printf("Hi, " + nickname);
-                        terminal.printf(
-                                "Now, with the following questions, we can help you find friends similar to you.");
-
+                        terminal.printf("** PERSONAL FRIEND LIST  **\n");
                     case 2:
-                        terminal.printf("SIGN IN\n");
-
+                        terminal.printf("**  PERSONAL INFO  **\n");
                     case 3:
-                        terminal.printf("BYE BYE\n");
+                        terminal.printf("**  NEW EVALUATION TESTS  **\n");
+                    case 4:
+                        terminal.println("********************");
+                        terminal.println("**EXIT FROM SOCIAL**");
+                        terminal.println("********************");
                         System.exit(0);
                 }
             }
@@ -70,12 +68,10 @@ public class App {
         terminal.print("\n**************************************\n");
         terminal.printf("**************** MENU ****************");
         terminal.print("\n**************************************\n");
-        terminal.printf("** 1 - REGISTER;                    **\n");
-        terminal.printf("** 2 - LOGIN;                       **\n");
-        terminal.printf("** 3 - EXIT;                        **\n");
-        terminal.printf("** 4 - SHOW YOUR FRIEND LIST        **\n");
-        terminal.printf("** 5 - SHOW USER                    **\n");
-        terminal.printf("** 6 - CHANGE YOUR PERSONAL INFO    **\n");
+        terminal.printf("** 1 - SHOW YOUR FRIEND LIST        **\n");
+        terminal.printf("** 2 - SHOW PERSONAL INFO;          **\n");
+        terminal.printf("** 3 - REPEAT EVALUATION TESTS;     **\n");
+        terminal.printf("** 4 - EXIT FROM SOCIAL;            **\n");
         terminal.print("**************************************\n");
         terminal.print("**************************************\n");
     }
@@ -85,5 +81,20 @@ public class App {
         terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
         Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
         Utils.printAnswers(peer.usr.getArrAnswers());
+    }
+
+    public static String chooseNickname(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) {
+        String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
+        terminal.print("Set you personal Nickname: ");
+        String nickName = textIO.newStringInputReader().read();
+        if(peer.checkUnicNickName(nickName)) {
+            if(peer.join(user, nickName)) {
+                terminal.printf("** NICKNAME OK, USER JOINED! **");
+                return nickName;
+            }
+        }
+        else
+            terminal.printf("[ERROR] - User already exist\n");
+        return chooseNickname(terminal, textIO, peer);
     }
 }

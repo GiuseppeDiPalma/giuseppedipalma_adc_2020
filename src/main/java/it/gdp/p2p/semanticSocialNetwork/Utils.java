@@ -9,7 +9,6 @@ import org.beryx.textio.TextTerminal;
 public class Utils {
 
     final static int MASTER_PORT_BASE = 6000;
-    static Scanner input = new Scanner(System.in);
     static TextIO textIO = TextIoFactory.getTextIO();
     static TextTerminal terminal = textIO.getTextTerminal();
 
@@ -21,8 +20,12 @@ public class Utils {
     }
 
     public static void printAnswers(List<Integer> answersList) {
+        System.out.print("\nAnswer Key: [");
+
         for (int i = 0; i < answersList.size(); i++)
-            terminal.println(answersList.get(i).toString(i));
+            System.out.print(answersList.get(i));
+        
+        System.out.println("]\n");        
     }
 
     // function to calculate Hamming distance

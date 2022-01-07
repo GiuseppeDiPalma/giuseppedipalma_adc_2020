@@ -8,8 +8,9 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public String nickName;
-    public List<Integer> arrAnswers = new ArrayList<Integer>();
     String profileKey;
+    
+    public List<Integer> arrAnswers = new ArrayList<Integer>();
     List<String> frinedList = new ArrayList<String>();
     
 
