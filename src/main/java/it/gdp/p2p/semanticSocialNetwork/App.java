@@ -1,19 +1,27 @@
 package it.gdp.p2p.semanticSocialNetwork;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+import org.slf4j.helpers.Util;
 
 public class App {
 
+    protected static SemanticHarmonySocialNetworkImpl peer;
+    static List<String> friends = new ArrayList<String>();
+
     @Option(name = "-mip", aliases = "--ipmaster", usage = "Ip of master peer", required = true)
-    private static String masterIp;
+    private static String master;
 
     @Option(name = "-peerid", aliases = "--identifierpeer", usage = "Identifier unique for peer", required = true)
-    private static int peerId;
+    private static int id;
 
     public static void main(String[] args) throws Exception {
         App app = new App();
@@ -21,18 +29,32 @@ public class App {
 
         try {
             parser.parseArgument(args);
-
             TextIO textIO = TextIoFactory.getTextIO();
             TextTerminal terminal = textIO.getTextTerminal();
-
-            SemanticHarmonySocialNetworkImpl peer = new SemanticHarmonySocialNetworkImpl(peerId, masterIp,
-                    new MessageListenerImpl(peerId));
+            
+            peer = new SemanticHarmonySocialNetworkImpl(id, master, new MessageListenerImpl(id));
 
             terminal.printf("WELCOME ON BOARD MARINER\n\n");
-            terminal.printf("PEER_ID_INFO: [%d] || MASTER_NODE_INFO: [%s]\n", peerId, masterIp);
+            terminal.printf("PEER_ID_INFO: [%d] || MASTER_NODE_INFO: [%s]\n", id, master);
+        
+            terminal.printf("\nBefore we start, we need to know more about your personality.\n");
+            terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
+            Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
+            Utils.printAnswers(peer.usr.getArrAnswers());
 
-            makeQuestions(terminal, peer);
-            chooseNickname(terminal, textIO, peer);
+            String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
+            terminal.print("Set you personal Nickname: ");
+            String nickName = textIO.newStringInputReader().read();
+            System.out.println("user: " + user + " nickName: " + nickName);
+            if(peer.join(user, nickName)) {
+                terminal.printf("** NICKNAME OK, USER JOINED! **");
+            }
+            else {
+                terminal.printf("Error JOIN");
+            }
+            // makeQuestions(terminal, peer);
+            // nameAndJoin(terminal, textIO, peer);
+            
             while (true) {
                 firstMenu(terminal);
 
@@ -40,15 +62,38 @@ public class App {
 
                 switch (option) {
                     case 1:
-                        terminal.printf("** PERSONAL FRIEND LIST  **\n");
+                        friends = peer.getFriends();
+                        // if frineds is empty print message else print frineds
+                        if(friends.size() != 0) {
+                            terminal.printf("** PERSONAL FRIEND LIST  **\n");
+                            Utils.getFriends(peer.usr.getfrinedList());
+                        }
+                        else {
+                            terminal.printf("** NO FRIENDS YET **\n");
+                        }
                     case 2:
-                        terminal.printf("**  PERSONAL INFO  **\n");
+                        terminal.printf("**  PEOPLE SEARCH  **\n");
+                        // search user with nickname
+                        String nicknameToFind = textIO.newStringInputReader().withMaxLength(20).read("Nickname");
+                        User userFind = peer.getUser(nicknameToFind);
+                        if(nicknameToFind != null){
+                            if(userFind.getnickName().equals(peer.usr.getnickName())) {
+                                userFind.showMe();
+                            }
+                            else {
+                                userFind.showUser();
+                            }
+                        } else {
+                            terminal.printf("\nNo user found with this name!!\n");
+                        }
+
                     case 3:
                         terminal.printf("**  NEW EVALUATION TESTS  **\n");
                     case 4:
                         terminal.println("********************");
                         terminal.println("**EXIT FROM SOCIAL**");
                         terminal.println("********************");
+                        peer.exitFromNetwork();
                         System.exit(0);
                 }
             }
@@ -60,19 +105,16 @@ public class App {
     }
 
     /**
-     * First menù of social network
+     * First menu of social network
      * 
      * @param terminal
      */
     public static void firstMenu(TextTerminal terminal) {
-        terminal.print("\n**************************************\n");
-        terminal.printf("**************** MENU ****************");
-        terminal.print("\n**************************************\n");
+        terminal.printf("\n\n**************** MENU ****************\n");
         terminal.printf("** 1 - SHOW YOUR FRIEND LIST        **\n");
         terminal.printf("** 2 - SHOW PERSONAL INFO;          **\n");
         terminal.printf("** 3 - REPEAT EVALUATION TESTS;     **\n");
         terminal.printf("** 4 - EXIT FROM SOCIAL;            **\n");
-        terminal.print("**************************************\n");
         terminal.print("**************************************\n");
     }
 
@@ -83,18 +125,21 @@ public class App {
         Utils.printAnswers(peer.usr.getArrAnswers());
     }
 
-    public static String chooseNickname(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) {
+    public static void nameAndJoin(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) throws NoSuchAlgorithmException {
         String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
         terminal.print("Set you personal Nickname: ");
         String nickName = textIO.newStringInputReader().read();
-        if(peer.checkUnicNickName(nickName)) {
-            if(peer.join(user, nickName)) {
-                terminal.printf("** NICKNAME OK, USER JOINED! **");
-                return nickName;
-            }
+        System.out.println("user: " + user + " nickName: " + nickName);
+        if(peer.join(user, nickName)) {
+            terminal.printf("** NICKNAME OK, USER JOINED! **");
         }
-        else
-            terminal.printf("[ERROR] - User already exist\n");
-        return chooseNickname(terminal, textIO, peer);
+        else {
+            terminal.printf("Error JOIN");
+        }
     }
+
+    public static void showUser(TextTerminal terminal, String userInfo) {
+        terminal.printf("\n%s\n", userInfo);
+    }
+    
 }

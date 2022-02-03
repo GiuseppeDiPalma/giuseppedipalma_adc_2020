@@ -1,5 +1,6 @@
 package it.gdp.p2p.semanticSocialNetwork;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
@@ -30,8 +31,9 @@ public interface SemanticHarmonySocialNetwork {
      * 
      * @param _answer a list of answers.
      * @return a String, the obtained profile key.
+     * @throws NoSuchAlgorithmException
      */
-    public String createAuserProfileKey(List<Integer> _answer);
+    public String createAuserProfileKey(List<Integer> _answer) throws NoSuchAlgorithmException;
 
     /**
      * Joins in the Network. An automatic messages to each potential new friend is

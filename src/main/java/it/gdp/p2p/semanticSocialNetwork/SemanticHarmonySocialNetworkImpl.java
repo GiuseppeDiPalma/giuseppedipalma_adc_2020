@@ -2,6 +2,7 @@ package it.gdp.p2p.semanticSocialNetwork;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import net.tomp2p.dht.FutureGet;
 import net.tomp2p.dht.PeerBuilderDHT;
 import net.tomp2p.dht.PeerDHT;
 import net.tomp2p.futures.FutureBootstrap;
+import net.tomp2p.futures.FutureDirect;
 import net.tomp2p.p2p.Peer;
 import net.tomp2p.p2p.PeerBuilder;
 import net.tomp2p.peers.Number160;
@@ -23,6 +25,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     final private PeerDHT dht;
 
     User usr = new User();
+    String profileKey;
 
     public SemanticHarmonySocialNetworkImpl(int idPeer, String masterPeer, final MessageListener listener)
             throws Exception {
@@ -39,13 +42,30 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         } else {
             throw new Exception("Error in master peer bootstrap.");
         }
-
+        creatPeerAddressList();
         peer.objectDataReply(new ObjectDataReply() {
 
             public Object reply(PeerAddress sender, Object request) throws Exception {
                 return listener.parseMessage(request);
             }
         });
+    }
+
+    public boolean creatPeerAddressList() {// changed from void to boolean
+        try {
+            FutureGet futureGet = dht.get(Number160.createHash("peerAddress")).start();
+            futureGet.awaitUninterruptibly();
+            if (futureGet.isSuccess() && futureGet.isEmpty()) {
+                dht.put(Number160.createHash("peerAddress")).data(new Data(new HashMap<PeerAddress, String>())).start()
+                        .awaitUninterruptibly();
+
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     public List<String> getUserProfileQuestions() {
@@ -69,8 +89,9 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
             FutureGet fg = dht.get(Number160.createHash("peerAddress")).start();
             fg.awaitUninterruptibly();
             if(fg.isSuccess()) {
-                if(fg.isEmpty())
+                if(fg.isEmpty()) {
                     return null;
+                }
                 HashMap<PeerAddress, String> connected_peers;
                 connected_peers = (HashMap<PeerAddress, String>) fg.dataMap().values().iterator().next().object();
                 for(String p : connected_peers.values()) {
@@ -95,36 +116,98 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return true;
     }
 
-    public String createAuserProfileKey(List<Integer> _answer) {
-        // TODO Auto-generated method stub
-        return null;
+    public String createAuserProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
+        profileKey = Utils.genProfileKey(answer);
+        return profileKey;
     }
 
-    public boolean join(String profileKeyString, String nickName)
-    {
+    public boolean validateProfileKey(String profileKey) {
+        List<User> userList = getObjPeers();
+        for(User user : userList) {
+            if(user.getProfileKey().equals(profileKey)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean join(String profileKeyString, String nickName) {
         try {
             FutureGet fg = dht.get(Number160.createHash(profileKeyString)).start();
             fg.awaitUninterruptibly();
-            if(fg.isEmpty() && fg.isSuccess()) 
+            if(fg.isSuccess() && fg.isEmpty())
             {
                 usr.setProfileKey(profileKeyString);
                 usr.setnickName(nickName);
                 dht.put(Number160.createHash(profileKeyString)).data(new Data(usr)).start().awaitUninterruptibly();
             }
-
-            FutureGet fg_2 = dht.get(Number160.createHash("peerAaddress")).start();
-            fg_2.awaitUninterruptibly();
-            if (fg_2.isSuccess()) {
-                if(fg.isEmpty())
+            FutureGet fg2 = dht.get(Number160.createHash("peerAaddress")).start();
+            fg2.awaitUninterruptibly();
+            if (fg2.isSuccess()) {
+                if(fg2.isEmpty()) {
+                    System.out.println("Sto ritornando FALSE1");
                     return false;
-
+                }
                 HashMap<PeerAddress, String> connected_peers;
-                connected_peers = (HashMap<PeerAddress, String>) fg.dataMap().values().iterator().next().object();
+                connected_peers = (HashMap<PeerAddress, String>) fg2.dataMap().values().iterator().next().object();
                 connected_peers.put(dht.peerAddress(), usr.getProfileKey());
-                dht.put(Number160.createHash("peerAddress")).data(new Data(connected_peers)).start().awaitUninterruptibly();
-                // TODO: notification(connected_peers, nickName + "has the same interests as you!!");
+                dht.put(Number160.createHash("peerAddress")).data(new Data(connected_peers)).start()
+                .awaitUninterruptibly();
+                notification(connected_peers, nickName + "has the same interests as you!!");
+            }
+            System.out.println("Sto ritornando TRUE");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Sto ritornando FALSE2");
+        return false;
+    }
+
+    public boolean notification(HashMap<PeerAddress, String> hashmap, Object obj) {
+        try {
+            for( PeerAddress peer : hashmap.keySet()) {
+                if(dht.peerAddress() != peer) {
+                    FutureDirect fd = dht.peer().sendDirect(peer).object(obj).start();
+                    fd.awaitUninterruptibly();
+                }
             }
             return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public static void getFriends(List<String> friends) {
+
+    }
+
+    public User getUser(String nickName) {
+        List<User> userList = getObjPeers();
+        for(User user : userList) {
+            if(user.getnickName().equals(nickName.toLowerCase())) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public boolean exitFromNetwork() {
+        try {
+            FutureGet fg = dht.get(Number160.createHash("peerAddress")).start();
+            fg.awaitUninterruptibly();
+            if(fg.isSuccess()){
+                if(fg.isEmpty()) {
+                    return false;
+                }
+                HashMap<PeerAddress, String> connected_peers;
+                connected_peers = (HashMap<PeerAddress, String>) fg.dataMap().values().iterator().next().object();
+                connected_peers.remove(dht.peerAddress());
+                dht.put(Number160.createHash("peerAddress")).data(new Data(connected_peers)).start().awaitUninterruptibly();
+                dht.peer().shutdown().awaitUninterruptibly();
+
+                return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,7 +215,18 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     }
 
     public List<String> getFriends() {
-        // TODO Auto-generated method stub
-        return null;
+        List<User> userList = getObjPeers();
+        List<String> friends = new ArrayList<String>();
+        if(!userList.isEmpty()) {
+            for(User user : userList) {
+                if(usr.getnickName().equals(user.getnickName())) {
+                    if(Utils.checkFriendship(usr, user)) {
+                        friends.add(user.getnickName());
+                    }
+                }
+            }
+        }
+        usr.setFriends(friends);
+        return friends;
     }
 }
