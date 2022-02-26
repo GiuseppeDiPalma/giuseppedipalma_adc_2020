@@ -10,7 +10,6 @@ import org.beryx.textio.TextTerminal;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
-import org.slf4j.helpers.Util;
 
 public class App {
 
@@ -97,11 +96,9 @@ public class App {
                         System.exit(0);
                 }
             }
-
         } catch (CmdLineException e) {
             e.printStackTrace();
         }
-
     }
 
     /**

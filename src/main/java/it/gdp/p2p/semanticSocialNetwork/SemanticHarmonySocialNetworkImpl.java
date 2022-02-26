@@ -141,7 +141,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
                 usr.setnickName(nickName);
                 dht.put(Number160.createHash(profileKeyString)).data(new Data(usr)).start().awaitUninterruptibly();
             }
-            FutureGet fg2 = dht.get(Number160.createHash("peerAaddress")).start();
+            FutureGet fg2 = dht.get(Number160.createHash("peerAddress")).start();
             fg2.awaitUninterruptibly();
             if (fg2.isSuccess()) {
                 if(fg2.isEmpty()) {
