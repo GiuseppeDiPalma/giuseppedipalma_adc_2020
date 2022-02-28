@@ -74,8 +74,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     }
 
     public User get(String nickName) throws ClassNotFoundException, IOException {
-        FutureGet fg = dht.get(Number160.createHash(nickName)).start();
-        fg.awaitListenersUninterruptibly();
+        FutureGet fg = dht.get(Number160.createHash(nickName)).start().awaitUninterruptibly();
         if(fg.isSuccess()) {
             return (User) fg.dataMap().values().iterator().next().object();
         }
@@ -86,8 +85,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         List<User> peersList = new ArrayList<User>();
         User user;
         try {
-            FutureGet fg = dht.get(Number160.createHash("peerAddress")).start();
-            fg.awaitUninterruptibly();
+            FutureGet fg = dht.get(Number160.createHash("peerAddress")).start().awaitUninterruptibly();
             if(fg.isSuccess()) {
                 if(fg.isEmpty()) {
                     return null;
@@ -133,19 +131,16 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 
     public boolean join(String profileKeyString, String nickName) {
         try {
-            FutureGet fg = dht.get(Number160.createHash(profileKeyString)).start();
-            fg.awaitUninterruptibly();
+            FutureGet fg = dht.get(Number160.createHash(profileKeyString)).start().awaitUninterruptibly();
             if(fg.isSuccess() && fg.isEmpty())
             {
                 usr.setProfileKey(profileKeyString);
                 usr.setnickName(nickName);
                 dht.put(Number160.createHash(profileKeyString)).data(new Data(usr)).start().awaitUninterruptibly();
             }
-            FutureGet fg2 = dht.get(Number160.createHash("peerAddress")).start();
-            fg2.awaitUninterruptibly();
+            FutureGet fg2 = dht.get(Number160.createHash("peerAddress")).start().awaitUninterruptibly();
             if (fg2.isSuccess()) {
                 if(fg2.isEmpty()) {
-                    System.out.println("Sto ritornando FALSE1");
                     return false;
                 }
                 HashMap<PeerAddress, String> connected_peers;
@@ -155,12 +150,10 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
                 .awaitUninterruptibly();
                 notification(connected_peers, nickName + "has the same interests as you!!");
             }
-            System.out.println("Sto ritornando TRUE");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Sto ritornando FALSE2");
         return false;
     }
 
@@ -219,7 +212,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         List<String> friends = new ArrayList<String>();
         if(!userList.isEmpty()) {
             for(User user : userList) {
-                if(usr.getnickName().equals(user.getnickName())) {
+                if(!usr.getnickName().equals(user.getnickName())) {
                     if(Utils.checkFriendship(usr, user)) {
                         friends.add(user.getnickName());
                     }

@@ -36,23 +36,8 @@ public class App {
             terminal.printf("WELCOME ON BOARD MARINER\n\n");
             terminal.printf("PEER_ID_INFO: [%d] || MASTER_NODE_INFO: [%s]\n", id, master);
         
-            terminal.printf("\nBefore we start, we need to know more about your personality.\n");
-            terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
-            Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
-            Utils.printAnswers(peer.usr.getArrAnswers());
-
-            String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
-            terminal.print("Set you personal Nickname: ");
-            String nickName = textIO.newStringInputReader().read();
-            System.out.println("user: " + user + " nickName: " + nickName);
-            if(peer.join(user, nickName)) {
-                terminal.printf("** NICKNAME OK, USER JOINED! **");
-            }
-            else {
-                terminal.printf("Error JOIN");
-            }
-            // makeQuestions(terminal, peer);
-            // nameAndJoin(terminal, textIO, peer);
+            makeQuestions(terminal, peer);
+            nameAndJoin(terminal, textIO, peer);
             
             while (true) {
                 firstMenu(terminal);
@@ -108,7 +93,7 @@ public class App {
      */
     public static void firstMenu(TextTerminal terminal) {
         terminal.printf("\n\n**************** MENU ****************\n");
-        terminal.printf("** 1 - SHOW YOUR FRIEND LIST        **\n");
+        terminal.printf("** 1 - SHOW YOUR FRIEND LIST;       **\n");
         terminal.printf("** 2 - SHOW PERSONAL INFO;          **\n");
         terminal.printf("** 3 - REPEAT EVALUATION TESTS;     **\n");
         terminal.printf("** 4 - EXIT FROM SOCIAL;            **\n");
@@ -118,25 +103,35 @@ public class App {
     public static void makeQuestions(TextTerminal terminal, SemanticHarmonySocialNetworkImpl peer){
         terminal.printf("\nBefore we start, we need to know more about your personality.\n");
         terminal.print("Answer this series of questions with a number between 1 (not at all agree) and 5 (very agree), Have fun!!\n");
+        pressToContinue();
         Utils.getAnswers(peer.getUserProfileQuestions(), peer.usr.getArrAnswers());
-        Utils.printAnswers(peer.usr.getArrAnswers());
+        //Utils.printAnswers(peer.usr.getArrAnswers());
     }
 
     public static void nameAndJoin(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) throws NoSuchAlgorithmException {
         String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
         terminal.print("Set you personal Nickname: ");
         String nickName = textIO.newStringInputReader().read();
-        System.out.println("user: " + user + " nickName: " + nickName);
+        System.out.println("Nickname: " + nickName + "UserProfileKey: " + user);
         if(peer.join(user, nickName)) {
-            terminal.printf("** NICKNAME OK, USER JOINED! **");
+            terminal.printf("** USER JOINED! **");
         }
         else {
-            terminal.printf("Error JOIN");
+            terminal.printf("[ERROR] USER NOT JOINED");
         }
     }
 
     public static void showUser(TextTerminal terminal, String userInfo) {
         terminal.printf("\n%s\n", userInfo);
+    }
+
+    public static void pressToContinue(){
+        System.out.println("Press enter to continue...");
+        try{
+            System.in.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

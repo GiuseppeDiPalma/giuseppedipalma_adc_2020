@@ -2,7 +2,10 @@ package it.gdp.p2p.semanticSocialNetwork;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -54,40 +57,34 @@ public class Utils {
     public static String genProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
         
         List<String> str = answer.stream().map(Object::toString).collect(Collectors.toUnmodifiableList());
-
         String profileKey = str.stream().collect(Collectors.joining(""));
-        
-        // System.out.println("Strings: " + str + " -  md5: "+ getMd5(profileKey));
-        
-        return profileKey;
+
+        String finalString = profileKey + generateRandomString();
+
+        return shuffle(finalString);
     }
 
-    public static String getMd5(String input)
-    {
-        try {
-  
-            // Static getInstance method is called with hashing MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-  
-            // digest() method is called to calculate message digest
-            //  of an input digest() return array of byte
-            byte[] messageDigest = md.digest(input.getBytes());
-  
-            // Convert byte array into signum representation
-            BigInteger no = new BigInteger(1, messageDigest);
-  
-            // Convert message digest into hex value
-            String hashtext = no.toString(16);
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-            return hashtext;
-        } 
-  
-        // For specifying wrong message digest algorithms
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+    public static String generateRandomString() {
+ 
+        int leftLimit = 65; // letter 'A'
+        int rightLimit = 90; // letter 'Z'
+        int targetStringLength = 10;
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int) 
+              (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
         }
+        String generatedString = buffer.toString();
+    
+        return generatedString;
+    }
+
+    public static String shuffle(final String str) {
+        List<Character> chars = str.chars().mapToObj(e->(char)e).collect(Collectors.toList());
+        Collections.shuffle(chars);
+        return chars.stream().map(e->e.toString()).collect(Collectors.joining());
     }
 
     public static boolean checkFriendship(User one, User two) {
