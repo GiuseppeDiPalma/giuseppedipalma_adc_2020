@@ -41,4 +41,9 @@ docker build --no-cache -t social-p2p .
 
 ```bash
 docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 social-p2p
+
+//Other peer not master-peer
+docker ps
+docker inspect <MASTER PEER ID>
+docker run -i --name PEER-1 -e MASTERIP="ip-container" -e ID=1 social-p2p
 ```

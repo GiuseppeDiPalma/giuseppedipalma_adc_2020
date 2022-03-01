@@ -49,7 +49,6 @@ public class Utils {
     }
 
     public static String genProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
-
         //list integer to string
         String profileKey = "";
         for (int i = 0; i < answer.size(); i++) {

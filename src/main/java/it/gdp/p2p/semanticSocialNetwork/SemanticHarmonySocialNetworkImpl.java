@@ -208,6 +208,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     }
 
     public List<String> getFriends() {
+        System.out.println("Dentro getFriends");
         List<User> userList = getObjPeers();
         List<String> friends = new ArrayList<String>();
         if(!userList.isEmpty()) {
