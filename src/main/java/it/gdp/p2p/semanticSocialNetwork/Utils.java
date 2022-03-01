@@ -1,13 +1,7 @@
 package it.gdp.p2p.semanticSocialNetwork;
 
-import java.io.IOException;
-import java.math.BigInteger;
-import java.nio.charset.Charset;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
@@ -55,12 +49,14 @@ public class Utils {
     }
 
     public static String genProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
-        
-        List<String> str = answer.stream().map(Object::toString).collect(Collectors.toUnmodifiableList());
-        String profileKey = str.stream().collect(Collectors.joining(""));
+
+        //list integer to string
+        String profileKey = "";
+        for (int i = 0; i < answer.size(); i++) {
+             profileKey += answer.get(i);
+        } 
 
         return profileKey + generateRandomString();
-        //return shuffle(finalString);
     }
 
     public static String generateRandomString() {
@@ -78,12 +74,6 @@ public class Utils {
         String generatedString = buffer.toString();
     
         return generatedString;
-    }
-
-    public static String shuffle(final String str) {
-        List<Character> chars = str.chars().mapToObj(e->(char)e).collect(Collectors.toList());
-        Collections.shuffle(chars);
-        return chars.stream().map(e->e.toString()).collect(Collectors.joining());
     }
 
     public static boolean checkFriendship(User one, User two) {
