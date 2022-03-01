@@ -42,7 +42,7 @@ public class User implements Serializable {
         this.profileKey = profileKey;
     }
 
-    public List<String> getfrinedList() {
+    public List<String> getFriendList() {
         return frinedList;
     }
 

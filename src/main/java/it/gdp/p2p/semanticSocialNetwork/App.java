@@ -50,7 +50,7 @@ public class App {
                         // if frineds is empty print message else print frineds
                         if(friends.size() != 0) {
                             terminal.printf("** PERSONAL FRIEND LIST  **\n");
-                            Utils.getFriends(peer.usr.getfrinedList());
+                            Utils.getFriends(peer.usr.getFriendList());
                         }
                         else {
                             terminal.printf("** NO FRIENDS YET **\n");
@@ -93,9 +93,9 @@ public class App {
      */
     public static void firstMenu(TextTerminal terminal) {
         terminal.printf("\n\n**************** MENU ****************\n");
-        terminal.printf("** 1 - SHOW YOUR FRIEND LIST;       **\n");
-        terminal.printf("** 2 - SHOW PERSONAL INFO;          **\n");
-        terminal.printf("** 3 - REPEAT EVALUATION TESTS;     **\n");
+        terminal.printf("** 1 - SHOW FRIEND LIST;            **\n");
+        terminal.printf("** 2 - PEOPLE SEARCH;               **\n");
+        terminal.printf("** 3 - ***********************;     **\n");
         terminal.printf("** 4 - EXIT FROM SOCIAL;            **\n");
         terminal.print("**************************************\n");
     }

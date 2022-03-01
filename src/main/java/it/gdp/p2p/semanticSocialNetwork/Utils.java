@@ -59,9 +59,8 @@ public class Utils {
         List<String> str = answer.stream().map(Object::toString).collect(Collectors.toUnmodifiableList());
         String profileKey = str.stream().collect(Collectors.joining(""));
 
-        String finalString = profileKey + generateRandomString();
-
-        return shuffle(finalString);
+        return profileKey + generateRandomString();
+        //return shuffle(finalString);
     }
 
     public static String generateRandomString() {
@@ -113,17 +112,5 @@ public class Utils {
         // Edit distance is delete operations +
         // insert operations.
         return (m - lcs) + (n - lcs);
-    }
-
-
-    public static void cls(){
-        try {
-    
-         if (System.getProperty("os.name").contains("Windows"))
-             new ProcessBuilder("cmd", "/c", 
-                      "cls").inheritIO().start().waitFor();
-         else
-             Runtime.getRuntime().exec("clear");
-        } catch (IOException | InterruptedException ex) {}
     }
 }
