@@ -90,4 +90,13 @@ public class Utils {
         System.out.println("LCS in function: " + lcs);
         return (m - lcs) + (n - lcs);
     }
+
+    public static void pressToContinue(){
+        System.out.println("\nPress enter to continue...");
+        try{
+            System.in.read();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

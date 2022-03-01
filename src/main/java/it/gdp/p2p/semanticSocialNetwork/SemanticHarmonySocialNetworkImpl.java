@@ -179,6 +179,16 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return null;
     }
 
+    //get all the users in the network
+    public List<User> getAllUsers() {
+        List<User> userList = new ArrayList<User>();
+        List<User> peersList = getObjPeers();
+        if(peersList != null) {
+            userList.addAll(peersList);
+        }
+        return userList;
+    }
+
     public boolean exitFromNetwork() {
         try {
             FutureGet fg = dht.get(Number160.createHash("peerAddress")).start();
@@ -202,7 +212,6 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
     }
 
     public List<String> getFriends() {
-        System.out.println("Dentro getFriends");
         List<User> userList = getObjPeers();
         List<String> friends = new ArrayList<String>();
         if(!userList.isEmpty()) {
