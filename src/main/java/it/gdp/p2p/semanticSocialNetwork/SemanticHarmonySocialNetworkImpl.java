@@ -64,7 +64,6 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
             e.printStackTrace();
             return false;
         }
-
     }
 
     public List<String> getUserProfileQuestions() {

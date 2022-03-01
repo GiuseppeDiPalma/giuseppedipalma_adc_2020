@@ -7,8 +7,6 @@ import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 
-
-
 public class Utils {
 
     final static int MASTER_PORT_BASE = 6000;
@@ -30,19 +28,8 @@ public class Utils {
         
         System.out.println("]\n");        
     }
-
-    // function to calculate Hamming distance
-    static int hammingDist(String str1, String str2) {
-        int i = 0, count = 0;
-        while (i < str1.length()) {
-            if (str1.charAt(i) != str2.charAt(i))
-                count++;
-            i++;
-        }
-        return count;
-    }
     
-    public static void getFriends (List<String> friends) {
+    public static void getFriends(List<String> friends) {
         for (int i = 0; i < friends.size(); i++) {
             terminal.printf("Friend %d: %s\n", i + 1, friends.get(i));
         }
@@ -76,7 +63,12 @@ public class Utils {
     public static boolean checkFriendship(User one, User two) {
         int LCSDistance = editDistanceWith2Ops(one.getProfileKey(), two.getProfileKey());
         System.out.println("LCS_distance: "+LCSDistance);
-        return true;
+        if (LCSDistance <= 5) {
+            return true;
+        }
+        else {
+            return true;
+        }
     }
 
     static int editDistanceWith2Ops(String X, String Y) {
