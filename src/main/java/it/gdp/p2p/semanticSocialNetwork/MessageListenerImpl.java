@@ -19,7 +19,7 @@ public class MessageListenerImpl implements MessageListener {
         TextTerminal terminal = textIO.getTextTerminal();
         String message = (String) obj;
         // Simple check with message
-        terminal.printf("\n" + peerid + "] (Direct Message Received) " + message + "\n");
+        terminal.printf("\n" +"["+ peerid +"] (Direct Message Received) " + message + " \n");
         return "success";
     }
 }

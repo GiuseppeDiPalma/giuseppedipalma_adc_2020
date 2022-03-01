@@ -7,7 +7,7 @@ import org.beryx.textio.TextIO;
 import org.beryx.textio.TextIoFactory;
 import org.beryx.textio.TextTerminal;
 
-import java.security.*;
+
 
 public class Utils {
 
@@ -48,8 +48,7 @@ public class Utils {
         }
     }
 
-    public static String genProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
-        //list integer to string
+    public static String genProfileKey(List<Integer> answer){
         String profileKey = "";
         for (int i = 0; i < answer.size(); i++) {
              profileKey += answer.get(i);
@@ -59,7 +58,6 @@ public class Utils {
     }
 
     public static String generateRandomString() {
- 
         int leftLimit = 65; // letter 'A'
         int rightLimit = 90; // letter 'Z'
         int targetStringLength = 10;
@@ -77,7 +75,7 @@ public class Utils {
 
     public static boolean checkFriendship(User one, User two) {
         int LCSDistance = editDistanceWith2Ops(one.getProfileKey(), two.getProfileKey());
-        System.out.println(LCSDistance);
+        System.out.println("LCS_distance: "+LCSDistance);
         return true;
     }
 
@@ -97,9 +95,7 @@ public class Utils {
             }
         }
         int lcs = L[m][n];
- 
-        // Edit distance is delete operations +
-        // insert operations.
+        System.out.println("LCS in function: " + lcs);
         return (m - lcs) + (n - lcs);
     }
 }

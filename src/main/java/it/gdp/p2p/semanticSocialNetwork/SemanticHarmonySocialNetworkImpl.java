@@ -2,7 +2,6 @@ package it.gdp.p2p.semanticSocialNetwork;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,7 +103,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return peersList;
     }
 
-    public boolean checkUnicNickName(String nickName) {
+    public boolean checkUnicNickname(String nickName) {
         List<User> userList = getObjPeers();
         for(User user : userList) {
             if(user.getnickName().equals(nickName)) {
@@ -114,7 +113,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return true;
     }
 
-    public String createAuserProfileKey(List<Integer> answer) throws NoSuchAlgorithmException {
+    public String createAuserProfileKey(List<Integer> answer){
         profileKey = Utils.genProfileKey(answer);
         return profileKey;
     }
@@ -148,7 +147,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
                 connected_peers.put(dht.peerAddress(), usr.getProfileKey());
                 dht.put(Number160.createHash("peerAddress")).data(new Data(connected_peers)).start()
                 .awaitUninterruptibly();
-                notification(connected_peers, nickName + "has the same interests as you!!");
+                notification(connected_peers, nickName + " has the same interests as you!!");
             }
             return true;
         } catch (Exception e) {
@@ -159,7 +158,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 
     public boolean notification(HashMap<PeerAddress, String> hashmap, Object obj) {
         try {
-            for( PeerAddress peer : hashmap.keySet()) {
+            for(PeerAddress peer : hashmap.keySet()) {
                 if(dht.peerAddress() != peer) {
                     FutureDirect fd = dht.peer().sendDirect(peer).object(obj).start();
                     fd.awaitUninterruptibly();
@@ -169,10 +168,6 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         } catch (Exception e) {
             return false;
         }
-    }
-
-    public static void getFriends(List<String> friends) {
-
     }
 
     public User getUser(String nickName) {

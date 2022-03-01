@@ -1,6 +1,5 @@
 package it.gdp.p2p.semanticSocialNetwork;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,7 @@ public class App {
                         else {
                             terminal.printf("** NO FRIENDS YET **\n");
                         }
+                        break;
                     case 2:
                         terminal.printf("**  PEOPLE SEARCH  **\n");
                         // search user with nickname
@@ -70,15 +70,17 @@ public class App {
                         } else {
                             terminal.printf("\nNo user found with this name!!\n");
                         }
-
+                        break;
                     case 3:
                         terminal.printf("**  NEW EVALUATION TESTS  **\n");
+                        break;
                     case 4:
                         terminal.println("********************");
                         terminal.println("**EXIT FROM SOCIAL**");
                         terminal.println("********************");
                         peer.exitFromNetwork();
                         System.exit(0);
+                        break;
                 }
             }
         } catch (CmdLineException e) {
@@ -108,17 +110,21 @@ public class App {
         //Utils.printAnswers(peer.usr.getArrAnswers());
     }
 
-    public static void nameAndJoin(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) throws NoSuchAlgorithmException {
+    public static void nameAndJoin(TextTerminal terminal, TextIO textIO, SemanticHarmonySocialNetworkImpl peer) {
         String user = peer.createAuserProfileKey(peer.usr.getArrAnswers());
+
         terminal.print("Set you personal Nickname: ");
         String nickName = textIO.newStringInputReader().read();
-        System.out.println("Nickname: " + nickName + "UserProfileKey: " + user);
-        if(peer.join(user, nickName)) {
-            terminal.printf("** USER JOINED! **");
+        if(peer.checkUnicNickname(nickName)) {
+            if(peer.join(user, nickName)) {
+                terminal.printf("** USER JOINED **");
+            }
         }
         else {
-            terminal.printf("[ERROR] USER NOT JOINED");
+            terminal.printf("[ERROR] Nickname already in use");
         }
+
+        System.out.println("Nickname: " + nickName + "UserProfileKey: " + user);
     }
 
     public static void showUser(TextTerminal terminal, String userInfo) {
