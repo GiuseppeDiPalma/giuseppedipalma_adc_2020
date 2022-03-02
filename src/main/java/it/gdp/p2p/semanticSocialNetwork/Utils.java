@@ -13,6 +13,11 @@ public class Utils {
     static TextIO textIO = TextIoFactory.getTextIO();
     static TextTerminal terminal = textIO.getTextTerminal();
 
+    /**
+     * Print all questions to the user and add the answer in a list.
+     * @param questionsList
+     * @param answersList
+     */
     public static void getAnswers(List<String> questionsList, List<Integer> answersList) {
         for (int i = 0; i < questionsList.size(); i++) {
             terminal.printf(questionsList.get(i));
@@ -20,6 +25,9 @@ public class Utils {
         }
     }
 
+    /**
+     * Print the answer to the questions
+     */
     public static void printAnswers(List<Integer> answersList) {
         System.out.print("\nAnswer Key: [");
 
@@ -29,12 +37,19 @@ public class Utils {
         System.out.println("]\n");        
     }
     
+    /**
+     * Print all frinds of the User.
+     */
     public static void getFriends(List<String> friends) {
         for (int i = 0; i < friends.size(); i++) {
             terminal.printf("Friend %d: %s\n", i + 1, friends.get(i));
         }
     }
 
+    /**
+     * Merge list of answer with a random string of length 5
+     * @return String
+     */
     public static String genProfileKey(List<Integer> answer){
         String profileKey = "";
         for (int i = 0; i < answer.size(); i++) {
@@ -44,10 +59,15 @@ public class Utils {
         return profileKey + generateRandomString();
     }
 
+    /**
+     * Generate a random string of length 5;
+     * String have random characters from 'A' to 'Z'
+     * @return String
+     */
     public static String generateRandomString() {
         int leftLimit = 65; // letter 'A'
         int rightLimit = 90; // letter 'Z'
-        int targetStringLength = 10;
+        int targetStringLength = 5;
         Random random = new Random();
         StringBuilder buffer = new StringBuilder(targetStringLength);
         for (int i = 0; i < targetStringLength; i++) {
@@ -56,22 +76,32 @@ public class Utils {
             buffer.append((char) randomLimitedInt);
         }
         String generatedString = buffer.toString();
-    
         return generatedString;
     }
 
+    /**
+     * Check if two users are friends.
+     * If LCSDisance <= 5 then they are friends.
+     * Else they are not friends.
+     */
     public static boolean checkFriendship(User one, User two) {
-        int LCSDistance = editDistanceWith2Ops(one.getProfileKey(), two.getProfileKey());
-        System.out.println("LCS_distance: "+LCSDistance);
+        int LCSDistance = LCSDistance(one.getProfileKey(), two.getProfileKey());
+        //System.out.println(one.getProfileKey()+" <> "+ two.getProfileKey() + " LCSDistance " + LCSDistance);
         if (LCSDistance <= 5) {
             return true;
         }
         else {
-            return true;
+            return false;
         }
     }
 
-    static int editDistanceWith2Ops(String X, String Y) {
+    /**
+     * Returns the length of the longest common subsequence between two strings.
+     * @param X String 1
+     * @param Y String 2
+     * @return LCSDistance
+     */
+    static int LCSDistance(String X, String Y) {
         // Find LCS
         int m = X.length(), n = Y.length();
         int L[][] = new int[m + 1][n + 1];
@@ -87,10 +117,12 @@ public class Utils {
             }
         }
         int lcs = L[m][n];
-        System.out.println("LCS in function: " + lcs);
-        return (m - lcs) + (n - lcs);
+        return lcs;
     }
 
+    /**
+     * Trivial method for pess to continue
+     */
     public static void pressToContinue(){
         System.out.println("\nPress enter to continue...");
         try{

@@ -50,6 +50,10 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         });
     }
 
+    /**
+     * Create a list of peer addresses
+     * @return true if the list is created, false otherwise
+     */
     public boolean creatPeerAddressList() {// changed from void to boolean
         try {
             FutureGet futureGet = dht.get(Number160.createHash("peerAddress")).start();
@@ -66,11 +70,23 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         }
     }
 
+    /**
+     * Must-to-have.
+     * Add a peer address to the list
+     * @return list of Strings containing the questions
+     */
     public List<String> getUserProfileQuestions() {
         Question questions = new Question();
         return questions.returnQuestion();
     }
 
+    /**
+     * Return user object in the p2p network.
+     * @param nickName
+     * @return User if found, null otherwise
+     * @throws ClassNotFoundException
+     * @throws IOException
+     */
     public User get(String nickName) throws ClassNotFoundException, IOException {
         FutureGet fg = dht.get(Number160.createHash(nickName)).start().awaitUninterruptibly();
         if(fg.isSuccess()) {
@@ -79,6 +95,11 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return null;
     }
 
+    /**
+     * It finds, thanks to peerAddress in the DHT and the associated hasmap, 
+     * retrieves every object of type User within the network. 
+     * @return peerList
+     */
     public List<User> getObjPeers() {
         List<User> peersList = new ArrayList<User>();
         User user;
@@ -102,6 +123,11 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return peersList;
     }
 
+
+    /**
+     * Check if nickName is already in the network.
+     * @return true if nickName is already in the network, false otherwise
+     */
     public boolean checkUnicNickname(String nickName) {
         List<User> userList = getObjPeers();
         for(User user : userList) {
@@ -112,21 +138,22 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return true;
     }
 
+    /**
+     * Must-to-have.
+     * Create user profile key
+     * @return profileKey string
+     */
     public String createAuserProfileKey(List<Integer> answer){
         profileKey = Utils.genProfileKey(answer);
         return profileKey;
     }
 
-    public boolean validateProfileKey(String profileKey) {
-        List<User> userList = getObjPeers();
-        for(User user : userList) {
-            if(user.getProfileKey().equals(profileKey)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
+    /**
+     * Must-to-have.
+     * Allows the peer created earlier to join the network. 
+     * The parameters required are the profile key to identify the user and the nickname used to identify a user on the network. 
+     * The User object is first inserted into the network and then all peers are notified that a new peer has joined.
+     */
     public boolean join(String profileKeyString, String nickName) {
         try {
             FutureGet fg = dht.get(Number160.createHash(profileKeyString)).start().awaitUninterruptibly();
@@ -155,6 +182,12 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return false;
     }
 
+    /**
+     * Send message to peers on the network. The message is sent to all peers except the sender.
+     * @param hashmap addresss of peer
+     * @param obj object to be sent
+     * @return true if message is sent, false otherwise
+     */
     public boolean notification(HashMap<PeerAddress, String> hashmap, Object obj) {
         try {
             for(PeerAddress peer : hashmap.keySet()) {
@@ -169,6 +202,11 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         }
     }
 
+    /**
+     * Scrolls through the list of User objects, 
+     * and returns information about a specific nickname
+     * @return
+     */
     public User getUser(String nickName) {
         List<User> userList = getObjPeers();
         for(User user : userList) {
@@ -179,7 +217,10 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return null;
     }
 
-    //get all the users in the network
+    /**
+     * Return list of all user in the p2p network
+     * @return userList, list of <User>
+     */
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<User>();
         List<User> peersList = getObjPeers();
@@ -189,6 +230,9 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return userList;
     }
 
+    /**
+     * Allows exit from the p2p network. Annuncing to other peer that you are leaving.
+     */
     public boolean exitFromNetwork() {
         try {
             FutureGet fg = dht.get(Number160.createHash("peerAddress")).start();
@@ -211,6 +255,12 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
         return false;
     }
 
+    /**
+     * Must-to-have. 
+     * Provides a list of the user's friends on the network. 
+     * Evaluates the hamming distance between two strings.
+     * @return List<User>, list of friends of user.
+     */
     public List<String> getFriends() {
         List<User> userList = getObjPeers();
         List<String> friends = new ArrayList<String>();
