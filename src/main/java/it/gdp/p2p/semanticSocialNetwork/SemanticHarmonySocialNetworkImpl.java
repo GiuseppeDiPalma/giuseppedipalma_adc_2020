@@ -173,7 +173,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
                 connected_peers.put(dht.peerAddress(), usr.getProfileKey());
                 dht.put(Number160.createHash("peerAddress")).data(new Data(connected_peers)).start()
                 .awaitUninterruptibly();
-                notification(connected_peers, nickName + " has the same interests as you!!");
+                notification(connected_peers, nickName + " Join in the network!!");
             }
             return true;
         } catch (Exception e) {
