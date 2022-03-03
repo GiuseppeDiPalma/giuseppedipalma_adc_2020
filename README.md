@@ -36,33 +36,36 @@ This solution provides for the following actions:
 
 - Join the network;
 - Search for users;
+- Show all users on network;
 - Associate people with the same interests;
 - Exit the network.
 
 #### Solution structure
 
-- `public List<String> getUserProfileQuestions()`:
-- `public String createAuserProfileKey(List<Integer> _answer)`:
-- `public boolean join(String _profile_key, String _nick_name)`:
-- `public List<String> getFriends()`:
+- `public List<String> getUserProfileQuestions()`: This method provides a list of questions (consisting in strings).
+- `public String createAuserProfileKey(List<Integer> _answer)`: This method deals with a key. This key is composed by a 10 number (1 to 5) end 5 character (A to Z). Example: 2311114415LBCSE 2133342331WXPSI.
+- `public boolean join(String _profile_key, String _nick_name)`: This function allows user to join in the network.
+- `public List<String> getFriends()`: This method provides a list of the user's friends on the network. A random but not too random method was used. Using the two keys provided above, their LCS is calculated. If this value is equal to or less than 5, the two users will be added to their friend lists.
 
 ##### Specific functions
 
-- `public static String generateRandomString()`:
-- `static int LCSDistance(String X, String Y)`:
+- `public static String generateRandomString()`: Generate random string of 5 characters, A to Z.
+- `static int LCSDistance(String X, String Y)`: Longest common subsequence, finding the longest subsequence common to all sequences in a set of sequences (often just two sequences).
 
 #### JUnit tests
 
-- `void checkFillAnserList()`:
-- `void checkNewAnswer()`:
-- `void checkFriendship()`:
-- `void checkSendNotification()`:
-- `void checkJoinInNetwork()`:
-- `void checkPeerObj()`:
-- `void checkExitFromNetwork()`:
-- `void checkRetriveUserFromSearch()`:
+- `void checkSendNotification()`: check if a notification has actually been sent.
+- `void checkJoinInNetwork()`: check whether you have successfully joined the network.
+- `void checkPeerObj()`: checks whether users who have actually logged in are available in the social.
+- `void checkFriendship()`:  this test provides to check if the two userProfileKey are major minor or equal of a given threshold and thus in the case it establishes the friendship relationship between two users.
+- `void checkExitFromNetwork()`: checks whether the exit from the network was successful.
+- `void checkRetriveUserFromSearch()`: checks whether the search for a user, succeeds in finding the user.
 
-### Usage
+### Final considerations and conclusion
+
+This project was interesting. Of course the functionalities implemented are minimal, but they have helped me to understand how to manage and implement a p2p network and how to solve any problems that may exist.
+
+## Usage and how-to to test
 
 ```bash
 docker build --no-cache -t socialnetworkp2p .

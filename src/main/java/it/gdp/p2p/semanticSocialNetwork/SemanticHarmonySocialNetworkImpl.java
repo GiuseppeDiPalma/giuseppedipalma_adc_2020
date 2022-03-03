@@ -72,7 +72,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 
     /**
      * Must-to-have.
-     * Add a peer address to the list
+     * Get list of questions for user
      * @return list of Strings containing the questions
      */
     public List<String> getUserProfileQuestions() {

@@ -44,21 +44,9 @@ public class AppTest
     @BeforeAll
     static void initializePeers() throws Exception {
         p0 = new SemanticHarmonySocialNetworkImpl(0, "127.0.0.1", new MessageListenerImpl(0));
-        p1 = new SemanticHarmonySocialNetworkImpl(1, "127.0.0.1", new MessageListenerImpl(0));
-        p2 = new SemanticHarmonySocialNetworkImpl(2, "127.0.0.1", new MessageListenerImpl(1));
-        p3 = new SemanticHarmonySocialNetworkImpl(3, "127.0.0.1", new MessageListenerImpl(2));
-    }
-
-    @Test
-    void checkFillAnserList(){
-        answers = Arrays.asList(1, 2 , 3, 4, 5, 1, 2, 3, 4, 5);
-        assertTrue(answers.size() == 10);
-    }
-
-    @Test
-    void checkNewAnswer(){
-        answers.add(1);
-        assertTrue(answers.size() == 1);
+        p1 = new SemanticHarmonySocialNetworkImpl(1, "127.0.0.1", new MessageListenerImpl(1));
+        p2 = new SemanticHarmonySocialNetworkImpl(2, "127.0.0.1", new MessageListenerImpl(2));
+        p3 = new SemanticHarmonySocialNetworkImpl(3, "127.0.0.1", new MessageListenerImpl(3));
     }
 
     @Test
