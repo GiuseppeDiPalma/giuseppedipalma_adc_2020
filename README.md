@@ -24,9 +24,9 @@ At this point, the system can compute the user scoring according to the answers.
 
 #### 🚀 Proposed solution
 
-My personal solution has been developed on the basis of the indications given above. The first time you log on to the social network you are asked a series of questions(10) which you can answer with a grade from 1 (little agree) to 5 (very agree). At the end we will have a personal sequence of answers for each user.
+My personal solution has been developed on the basis of the indications given above. The first time you log on to the social network you are asked a series of questions(10) which you can answer with a grade from 1 (little agree) to 5 (very agree). At the end, we will have a personal sequence of answers for each user.
 
-Later this sequence was expanded with a random string of 5 characters (just to increase the randomness).
+Later, this sequence was expanded with a random string of 5 characters (just to increase the randomness).
 As soon as users become two or more, a check is made to see if two people have the same interests.
 
 This calculation is done using the algorithm [LCS(longest common subsequence)](https://en.wikipedia.org/wiki/Longest_common_subsequence_problem).
@@ -42,14 +42,14 @@ This solution provides for the following actions:
 
 #### 🧰 Solution structure
 
-- `public List<String> getUserProfileQuestions()`: This method provides a list of questions (consisting in strings).
+- `public List<String> getUserProfileQuestions()`: This method provides a list of questions (consisting of strings).
 - `public String createAuserProfileKey(List<Integer> _answer)`: This method deals with a key. This key is composed by a 10 number (1 to 5) end 5 character (A to Z). Example: 2311114415LBCSE 2133342331WXPSI.
 - `public boolean join(String _profile_key, String _nick_name)`: This function allows user to join in the network.
 - `public List<String> getFriends()`: This method provides a list of the user's friends on the network. A random but not too random method was used. Using the two keys provided above, their LCS is calculated. If this value is equal to or less than 5, the two users will be added to their friend lists.
 
 ##### ✂ Specific functions
 
-- `public static String generateRandomString()`: Generate random string of 5 characters, A to Z.
+- `public static String generateRandomString()`: Generate a random string of 5 characters, A to Z.
 - `static int LCSDistance(String X, String Y)`: Longest common subsequence, finding the longest subsequence common to all sequences in a set of sequences (often just two sequences).
 
 #### 🧪 JUnit tests
@@ -63,7 +63,7 @@ This solution provides for the following actions:
 
 ### 📜 Final considerations and conclusion
 
-This project was interesting. Of course the functionalities implemented are minimal, but they have helped me to understand how to manage and implement a p2p network and how to solve any problems that may exist.
+This project was interesting. Of course, the functionalities implemented are minimal, but they have helped me to understand how to manage and implement a p2p network and how to solve any problems that may exist.
 
 ## 🐲 Usage and how-to to test
 
