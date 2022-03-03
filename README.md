@@ -34,11 +34,11 @@ If the LCS distance value is <= 5 then there is friendship
 
 This solution provides for the following actions:
 
-- Join the network;
-- Search for users;
-- Show all users on network;
-- Associate people with the same interests;
-- Exit the network.
+- 🚪 Join the network;
+- 🔬 Search for users;
+- 🥅 Show all users on network;
+- 🎼 Associate people with the same interests;
+- 🔚 Exit the network.
 
 #### 🧰 Solution structure
 
